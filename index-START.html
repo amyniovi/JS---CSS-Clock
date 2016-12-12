@@ -61,12 +61,52 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin:100%;
+      transition: all 0.5s;
+      transition-timing-function: cubic-bezier(0.1,2.7,0.58,1);
     }
 
   </style>
 
   <script>
+    //get the date run this every second
+    function getDate (){
 
+      var fullTimeStr = new Date().toTimeString();
+      var time = fullTimeStr.substr(0,8);
+      var timeArr = time.split(":");
+      var hours= timeArr[0];
+      var minutes = timeArr[1];
+      var seconds = timeArr[2];
+      var secDegrees  = seconds * 6 + 90;
+      var minDegrees = minutes * 6 + 90;
+      var hourDegrees = hours * 30 + 90;
+      console.log(seconds);
+      console.log(minutes);
+      console.log(hours);
+      TransformHands(secDegrees, minDegrees, hourDegrees);
+
+    }
+
+    function TransformHands(secDegrees, minDegrees, hourDegrees){
+
+      var secHand = document.querySelector(`.second-hand`);
+
+      if(secDegrees==0 )
+        secHand.style.transform = `none`;
+      else
+        secHand.style.transform = `rotate(${secDegrees}deg)`;
+      var minHand = document.querySelector(`.min-hand`);
+      minHand.style.transform = `rotate(${minDegrees}deg)`;
+      var hourHand = document.querySelector(`.hour-hand`);
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+      //secHand.style.transform = `rotate(6deg)`;
+      //console.log(secHand);
+
+
+    }
+
+    setInterval(getDate,1000);
 
   </script>
 </body>
